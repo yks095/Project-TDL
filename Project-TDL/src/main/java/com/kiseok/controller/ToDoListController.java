@@ -18,7 +18,7 @@ public class ToDoListController {
     @GetMapping({"", "/"})
     public String board(@RequestParam(value = "idx", defaultValue = "0") Long idx, Model model) {
         model.addAttribute("toDoList", toDoListService.findTdlByIdx(idx));
-        return "/toDoList/form";
+        return "/toDoList/list";
     }
 
     @GetMapping("/list")

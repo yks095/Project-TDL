@@ -21,9 +21,9 @@ public class TdlApplication {
     @Bean
     public CommandLineRunner runner(ToDoListRepository toDoListRepository) throws Exception    {
         return (args) -> {
-            IntStream.rangeClosed(1, 20).forEach(index ->
+            IntStream.rangeClosed(1, 10).forEach(index ->
                     toDoListRepository.save(ToDoList.builder()
-                            .status(true)
+                            .status(false)
                             .description("내용" + index)
                             .createdDate(LocalDateTime.now())
 //                            .completedDate(LocalDateTime.now())

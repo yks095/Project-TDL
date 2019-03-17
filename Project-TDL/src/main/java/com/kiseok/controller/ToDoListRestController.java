@@ -43,10 +43,10 @@ public class ToDoListRestController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
-//    @DeleteMapping("{idx}")
-//    public ResponseEntity<?> deleteBoard(@PathVariable("idx")Long idx)  {
-//        boardRepository.deleteById(idx);
-//
-//        return new ResponseEntity<>("{}", HttpStatus.OK);
-//    }
+    @DeleteMapping("{idx}")
+    public ResponseEntity<?> deleteToDoList(@PathVariable("idx")Long idx)  {
+        toDoListRepository.deleteById(idx);
+        toDoListRepository.findAllByOrderByIdx();
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
 }

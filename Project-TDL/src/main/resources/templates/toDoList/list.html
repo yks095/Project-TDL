@@ -21,7 +21,6 @@
                         <input  id = "toDoList_description" type="text" class="form-control pull-left" placeholder="TO DO LIST" style="width: 250px">
                         <button type="button" class="btn btn-default" id="insert" >저장</button>
                     </div>
-
                 </div>
             </form>
 
@@ -33,22 +32,35 @@
             </tr>
             <tr>
                 <th class="col-md-1">#</th>
-                <th class="col-md-2">완료 여부</th>
-                <th class="col-md-5">내용</th>
+                <th class="col-md-1">완료 여부</th>
+                <th class="col-md-2">내용</th>
                 <th class="col-md-2">생성 날짜</th>
+                <th class="col-md-2">수정 날짜</th>
                 <th class="col-md-2">수정</th>
-                <th class="col-md-2"></th>
+                <th class="col-md-2">삭제</th>
+                <!--<th class="col-md-2"></th>-->
             </tr>
             </thead>
             <tbody>
             <tr th:each="toDoList : ${tdlList}">
                 <td th:text="${toDoList.idx}"></td>
-                <td th:text="${toDoList.status}"></td>
-                <!--<td th:text="${toDoList.description}"></td>-->
-                <td><a th:href="'/toDoList?idx='+${toDoList.idx}" th:text="${toDoList.description}"></a></td>
+                <!--<td th:text="${toDoList.status}"></td>-->
+
+                <!--<select class="form-control input-sm" id="status">-->
+                <!--<option th:selected="${toDoList?.status? == 'false'}">미완료</option>-->
+                <!--<option th:selected="${toDoList?.status? == 'true'}">완료</option>-->
+                <!--</select>-->
+
+                <td><select name="status">
+                    <option value="false">미완료</option>
+                    <option value="true">완료</option>
+                </select></td>
+
+                <td th:text="${toDoList.description}"></td>
                 <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
                 <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
-                <!--<td><button type="button" class="btn btn-default" id="update" >수정</button></td>>-->
+                <td th:align="center"><button type="button" class="update" data-th-value="${toDoList.idx}" ><img class="btn-img" src="/images/update.png" width="25px" height="25px"></button></td>>
+                <td th:align="center"><button type="button" class="delete" data-th-value="${toDoList.idx}" ><img class="btn-img" src="/images/delete.png" width="25px" height="25px"></button></td>>
 
             </tr>
             </tbody>
@@ -57,6 +69,33 @@
     <br/>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
+
+<script>
+    $('select option').each(function () {
+        // status: $('#toDoList_status option:selected').val()
+        var jsonData = JSON.stringify({
+            // status: $('#toDoList_status option:selected').val(),
+            status : $("select[name=status]").val()
+            // console.log("status 값 변경")            // createdDate: $('#toDoList_create_date').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/api/toDoLists/" + $(this).val(),
+            type: "PUT",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('완료 갱신 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('완료 갱신 실패!');
+            }
+        });
+    });
+
+</script>
+
 <script>
     $('#insert').click(function () {
         var jsonData = JSON.stringify({
@@ -74,6 +113,47 @@
             },
             error: function () {
                 alert('저장 실패!');
+            }
+        });
+    });
+
+    $('.update').click(function () {
+
+        // var st = prompt("내용", "");
+        var dc = prompt("내용", "");
+
+        var jsonData = JSON.stringify({
+            // status: $('#toDoList_status option:selected').val(),
+            description: dc,
+            // createdDate: $('#toDoList_create_date').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/api/toDoLists/" + $(this).val(),
+            type: "PUT",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('수정 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('수정 실패!');
+            }
+        });
+    });
+
+
+    $('.delete').click(function () {
+        $.ajax({
+            url: "http://localhost:8080/api/toDoLists/" + $(this).val(),
+            type: "DELETE",
+            success: function () {
+                alert('삭제 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('삭제 실패!');
             }
         });
     });
