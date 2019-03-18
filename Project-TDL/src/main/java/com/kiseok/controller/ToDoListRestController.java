@@ -33,12 +33,21 @@ public class ToDoListRestController {
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 
-    @PutMapping("{idx}")
-    public ResponseEntity<?> putToDoList(@PathVariable("idx")Long idx, @RequestBody ToDoList toDoList) {
-        System.out.println("ddddd");
+    @PutMapping("update/{idx}")
+    public ResponseEntity<?> putToDoList(@PathVariable("idx")Long idx, @RequestBody String description) {
+        System.out.println("Dfasdfsafsadf");
         ToDoList persistToDoList= toDoListRepository.getOne(idx);
-        persistToDoList.update(toDoList);
+        persistToDoList.update(description);
         toDoListRepository.save(persistToDoList);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    @PutMapping("status/{idx}")
+    public ResponseEntity<?> statusToDoList(@PathVariable("idx")Long idx) {
+        ToDoList statusToDoList= toDoListRepository.getOne(idx);
+        statusToDoList.updateStatus();
+        toDoListRepository.save(statusToDoList);
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }

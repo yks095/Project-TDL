@@ -39,12 +39,22 @@ public class ToDoList implements Serializable {
     }
 
     public void setCreatedDateNow() {
+        this.status = false;
         this.createdDate = LocalDateTime.now();
     }
 
-    public void update(ToDoList toDoList)    {
-        this.description = toDoList.getDescription();
-//        this.status = toDoList.getStatus();
-        this.completedDate = LocalDateTime.now();
+    public void update(String description)    {
+        this.description = description;
+    }
+
+    public void updateStatus()    {
+       if(this.status == true)  {
+           this.status = false;
+           this.completedDate = null;
+       }
+       else {
+           this.status = true;
+           this.completedDate = LocalDateTime.now();
+       }
     }
 }

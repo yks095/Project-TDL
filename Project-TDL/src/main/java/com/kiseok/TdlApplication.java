@@ -18,18 +18,18 @@ public class TdlApplication {
     public static void main(String[] args) {
         SpringApplication.run(TdlApplication.class, args);
     }
-    @Bean
-    public CommandLineRunner runner(ToDoListRepository toDoListRepository) throws Exception    {
-        return (args) -> {
-            IntStream.rangeClosed(1, 10).forEach(index ->
-                    toDoListRepository.save(ToDoList.builder()
-                            .status(false)
-                            .description("내용" + index)
-                            .createdDate(LocalDateTime.now())
-//                            .completedDate(LocalDateTime.now())
-                            .build()));
-        };
-    }
+//    @Bean
+//    public CommandLineRunner runner(ToDoListRepository toDoListRepository) throws Exception    {
+//        return (args) -> {
+//            IntStream.rangeClosed(1, 10).forEach(index ->
+//                    toDoListRepository.save(ToDoList.builder()
+//                            .status(false)
+//                            .description("내용" + index)
+//                            .createdDate(LocalDateTime.now())
+////                            .completedDate(LocalDateTime.now())
+//                            .build()));
+//        };
+//    }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
