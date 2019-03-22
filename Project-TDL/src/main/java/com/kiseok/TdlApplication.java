@@ -1,7 +1,9 @@
 package com.kiseok;
 
 import com.kiseok.domain.ToDoList;
+import com.kiseok.domain.User;
 import com.kiseok.repository.ToDoListRepository;
+import com.kiseok.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +11,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 @SpringBootApplication
@@ -18,18 +19,17 @@ public class TdlApplication {
     public static void main(String[] args) {
         SpringApplication.run(TdlApplication.class, args);
     }
-//    @Bean
-//    public CommandLineRunner runner(ToDoListRepository toDoListRepository) throws Exception    {
-//        return (args) -> {
-//            IntStream.rangeClosed(1, 10).forEach(index ->
-//                    toDoListRepository.save(ToDoList.builder()
-//                            .status(false)
-//                            .description("내용" + index)
-//                            .createdDate(LocalDateTime.now())
-////                            .completedDate(LocalDateTime.now())
-//                            .build()));
-//        };
-//    }
+
+    @Bean
+    public CommandLineRunner runner(UserRepository userRepository) throws Exception    {
+        return (args) -> {
+            User user = userRepository.save(User.builder()
+                            .id("yang")
+                            .password("1234")
+                            .email("rltjr219@gmail.com")
+                            .build());
+        };
+    }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {

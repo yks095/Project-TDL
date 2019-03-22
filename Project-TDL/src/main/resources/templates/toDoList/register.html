@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <head>
+            <title>로그인</title>
+            <meta charset="utf-8">
+            <link rel="stylesheet" href="/css/style.css">
+            <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+        </head>
+<body>
+<div class="login-form">
+    <form>
+        <input id="user_id" type="text" class="text-field" placeholder="ID"/>
+        <input id="user_password" type="password" class="text-field" placeholder="PASSWORD"/>
+        <input id="user_email" type="email" class="text-field" placeholder="E-MAIL"/>
+        <button id="insert" value="SAVE">저 장</button>
+    </form>
+    <div class="links">
+        <a href="http://localhost:8080/toDoList/login">뒤로가기</a>
+    </div>
+
+</div>
+</body>
+</html></title>
+</head>
+<body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('#insert').click(function () {
+
+        var jsonData = JSON.stringify({
+            id: $('#user_id').val(),
+            password: $('#user_password').val(),
+            email: $('#user_email').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/toDoList/api/register",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('저장 성공!');
+                location.href = '/toDoList/login';
+            },
+            error: function () {
+                alert('저장 실패!');
+            }
+        });
+    });
+</script>
+</body>
+</html>

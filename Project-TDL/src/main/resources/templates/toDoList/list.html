@@ -62,7 +62,7 @@
     $('.status').click(function () {
 
         $.ajax({
-            url: "/api/toDoLists/status/" + $(this).val(),
+            url: "http://localhost:8080/toDoList/api/status/" + $(this).val(),
             type: "PUT",
             contentType: "application/json",
             dataType: "json",
@@ -84,7 +84,7 @@
             description: $('#toDoList_description').val()
         });
         $.ajax({
-            url: "http://localhost:8080/api/toDoLists",
+            url: "http://localhost:8080/toDoList/api/list",
             type: "POST",
             data: jsonData,
             contentType: "application/json",
@@ -104,7 +104,7 @@
         var dc = $(this).parent().parent().find('.description').text()
 
         $.ajax({
-            url: "http://localhost:8080/api/toDoLists/update/" + $(this).val(),
+            url: "http://localhost:8080/toDoList/api/update/" + $(this).val(),
             type: "PUT",
             data: dc,
             contentType: "application/json",
@@ -122,7 +122,7 @@
 
     $('.delete').click(function () {
         $.ajax({
-            url: "http://localhost:8080/api/toDoLists/" + $(this).val(),
+            url: "http://localhost:8080/toDoList/api/delete/" + $(this).val(),
             type: "DELETE",
             success: function () {
                 alert('삭제 성공!');

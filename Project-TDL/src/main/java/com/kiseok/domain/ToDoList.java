@@ -3,11 +3,13 @@ package com.kiseok.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @Entity
@@ -30,6 +32,9 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Builder
     public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate) {
         this.description = description;
@@ -48,13 +53,8 @@ public class ToDoList implements Serializable {
     }
 
     public void updateStatus()    {
-       if(this.status == true)  {
-           this.status = false;
-           this.completedDate = null;
-       }
-       else {
-           this.status = true;
-           this.completedDate = LocalDateTime.now();
-       }
+       this.status = !this.getStatus();
+       this.completedDate = this.status? LocalDateTime.now() : null;
     }
+
 }
