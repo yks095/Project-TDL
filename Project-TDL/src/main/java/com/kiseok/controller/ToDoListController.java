@@ -5,6 +5,7 @@ import com.kiseok.domain.User;
 import com.kiseok.repository.ToDoListRepository;
 import com.kiseok.repository.UserRepository;
 import com.kiseok.service.ToDoListService;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@ToString
 @Controller
 @RequestMapping("/toDoList")
 public class ToDoListController {
@@ -30,20 +31,32 @@ public class ToDoListController {
 
     private User user;
 
-    @GetMapping({"", "/"})
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Long idx, Model model) {
-//        User user = userRepository.getOne(1L);
-
-        model.addAttribute("toDoList", toDoListService.findTdlByIdx(idx));
-        return "/toDoList/list";
+    @GetMapping("/logout")
+    public String logout()    {
+        this.user = null;
+        return "redirect:/toDoList/login";
     }
 
     @GetMapping("/list")
     public String list(Model model) {
-        user = toDoListService.findUserByIdx();
-        model.addAttribute("tdlList", toDoListService.findTdlList());
-        return "/toDoList/list";
+        System.out.println(this.user);
+        if(this.user == null)
+            return "redirect:/toDoList/login";
+        else {
+            model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
+            return "/toDoList/list";
+        }
     }
+
+    @PostMapping("/check")
+    public ResponseEntity<?> loginCheckUser(@RequestBody String id){
+
+        this.user = userRepository.findById(id);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+
+    }
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getToDoLists()    {
@@ -57,6 +70,8 @@ public class ToDoListController {
 
         toDoList.setCreatedDateNow();
         toDoList.setUser(user);
+        user.add(toDoList);
+        System.out.println(user.getToDoLists());
         toDoListRepository.save(toDoList);
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
@@ -82,7 +97,7 @@ public class ToDoListController {
     @DeleteMapping("/api/delete/{idx}")
     public ResponseEntity<?> deleteToDoList(@PathVariable("idx")Long idx)  {
         toDoListRepository.deleteById(idx);
-        toDoListRepository.findAllByOrderByIdx();
+//        toDoListRepository.findAllByUserOrderByIdxAsc();
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 

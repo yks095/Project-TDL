@@ -24,6 +24,8 @@
             <thead>
             <tr>
                 <th style="padding:13px 0 0 15px;">ToDoList</th>
+                <th><button type="button" class="logout" style="outline: none; border: 0px; background-color: white"><a href="/toDoList/logout">logout</a></button></th>
+
             </tr>
             <tr>
                 <th class="col-md-1" align="center" style="text-align: center">#</th>
@@ -118,7 +120,6 @@
             }
         });
     });
-
 
     $('.delete').click(function () {
         $.ajax({

@@ -32,7 +32,7 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
 
     @Builder

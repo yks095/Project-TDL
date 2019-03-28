@@ -18,24 +18,21 @@ public class ToDoListService {
     @Autowired
     UserRepository userRepository;
 
-    public List<ToDoList> findTdlList() {
-        return toDoListRepository.findAllByOrderByIdx();
+    private User user;
+
+    public List<ToDoList> findTdlList(User user) {
+        return toDoListRepository.findAllByUserOrderByIdx(user);
     }
 
-    public ToDoList findTdlByIdx(Long idx)   {
-        return toDoListRepository.findById(idx).orElse(new ToDoList());
-    }
+//    public ToDoList findTdlByIdx(Long idx)   {
+//        return toDoListRepository.findById(idx).orElse(new ToDoList());
+//    }
 
     public User findUserByIdx() {
         return userRepository.getOne(1L);
     }
 
     public boolean loginCheck(String id, String password)  {
-        /*
-        1. 디비에서 user를 찾았는데 없는 경우
-        2. 디비에서 user를 찾았느데 비밀번호가 다를경우
-        3. 디비에서 user를 찾고 비밀번호가 같은 경우
-         */
 
         System.out.println(id + " " + password);
 

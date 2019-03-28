@@ -1,5 +1,6 @@
 package com.kiseok.controller;
 
+import com.kiseok.domain.ToDoList;
 import com.kiseok.domain.User;
 import com.kiseok.repository.UserRepository;
 import com.kiseok.service.ToDoListService;
@@ -22,22 +23,29 @@ public class LoginController {
     @Autowired
     ToDoListService toDoListService;
 
+    private User user;
+
+
+
     @GetMapping("/login")
-    public String login(Model model)    {
+    public String login()    {
         return "/toDoList/login";
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> user)    {
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> user) {
 
         String id = user.get("id");
         String password = user.get("password");
 
-
-        if(toDoListService.loginCheck(id, password))
-            return new ResponseEntity<>("{}", HttpStatus.CREATED);
-
-        else
-            return null;
+        if (toDoListService.loginCheck(id, password))   {
+            System.out.println("id" + id + ", password" + password);
+            return new ResponseEntity<>("{}", HttpStatus.OK);
+        }
+        else return null;
     }
+
+
+
+
 }

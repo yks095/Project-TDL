@@ -32,6 +32,23 @@
             contentType: "application/json",
             dataType: "json",
             success: function () {
+                $.ajax({
+                    url: "http://localhost:8080/toDoList/check",
+                    type: "POST",
+                    data: $('#user_id').val(),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function () {
+                        // alert('로그인 성공!');
+                        location.href = '/toDoList/list';
+                    },
+                    error: function () {
+                        alert('로그인 실패!');
+                    }
+                });
+
+
+
                 alert('로그인 성공!');
                 location.href = '/toDoList/list';
             },

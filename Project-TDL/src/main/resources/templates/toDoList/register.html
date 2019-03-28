@@ -29,7 +29,20 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
     $('#insert').click(function () {
-
+        if($('#user_id').val().trim().length == 0){
+            alert("Insert ID.");
+            $('#user_id').focus();
+            return false;
+        }
+        if($('#user_password').val().trim().length == 0){
+            alert("Insert PASSWORD.");
+            $('#user_password').focus();
+            return false;
+        }if($('#user_email').val().trim().length == 0){
+            alert("Insert E-Mail.");
+            $('#user_email').focus();
+            return false;
+        }
         var jsonData = JSON.stringify({
             id: $('#user_id').val(),
             password: $('#user_password').val(),
