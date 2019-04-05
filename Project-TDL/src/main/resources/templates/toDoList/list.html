@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<meta charset="utf-8">-->
     <title>ToDoList</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
 </head>
@@ -125,6 +126,7 @@
         $.ajax({
             url: "http://localhost:8080/toDoList/api/delete/" + $(this).val(),
             type: "DELETE",
+            contentType: "application/json",
             success: function () {
                 alert('삭제 성공!');
                 location.href = '/toDoList/list';

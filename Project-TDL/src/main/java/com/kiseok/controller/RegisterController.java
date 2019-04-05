@@ -1,8 +1,8 @@
 package com.kiseok.controller;
 
-import com.kiseok.domain.ToDoList;
 import com.kiseok.domain.User;
 import com.kiseok.repository.UserRepository;
+import com.kiseok.service.ToDoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +20,20 @@ public class RegisterController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ToDoListService toDoListService;
+
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register() {
         return "/toDoList/register";
     }
 
     @PostMapping("/api/register")
     public ResponseEntity<?> registerUser(@RequestBody User user)    {
-        userRepository.save(user);
+
+//        toDoListService.check(user);
+        toDoListService.save(user);
+
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 }

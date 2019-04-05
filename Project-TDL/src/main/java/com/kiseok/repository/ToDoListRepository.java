@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface ToDoListRepository extends JpaRepository<ToDoList, Long> {
     List<ToDoList> findAllByUserOrderByIdx(User user);
-//    List<ToDoList> findAllByUserOrderByIdxAsc();
 }

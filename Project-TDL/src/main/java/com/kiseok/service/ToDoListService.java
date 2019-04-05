@@ -5,12 +5,19 @@ import com.kiseok.domain.User;
 import com.kiseok.repository.ToDoListRepository;
 import com.kiseok.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ToDoListService {
+public class ToDoListService implements UserDetailsService {
 
     @Autowired
     ToDoListRepository toDoListRepository;
@@ -18,32 +25,41 @@ public class ToDoListService {
     @Autowired
     UserRepository userRepository;
 
-    private User user;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<ToDoList> findTdlList(User user) {
+
         return toDoListRepository.findAllByUserOrderByIdx(user);
     }
-
-//    public ToDoList findTdlByIdx(Long idx)   {
-//        return toDoListRepository.findById(idx).orElse(new ToDoList());
-//    }
 
     public User findUserByIdx() {
         return userRepository.getOne(1L);
     }
 
-    public boolean loginCheck(String id, String password)  {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        System.out.println(id + " " + password);
+        User user = userRepository.findById(username);
 
-        User selectUser = userRepository.findById(id);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        System.out.println(selectUser);
-
-        if(selectUser == null)
-            return false;
-
-        return selectUser.getPassword().equals(password);
+        return new org.springframework.security.core.userdetails
+                .User(user.getId(), user.getPassword(), authorities);
 
     }
+
+    public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+//    public boolean check(User user) {
+//
+//        if()   {
+//            return false;
+//        }
+//
+//    }
 }
