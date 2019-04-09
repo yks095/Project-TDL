@@ -1,130 +1,93 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-    <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
-    <!--<link rel="stylesheet" href="/css/bootstrap.min.css"/>-->
+<!--<script type="text/javascript">-->
 
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="layout/header::header"></div>-->
+    <!--var getID= RegExp(/^[a-zA-Z0-9]{5,20}$/);-->
+    <!--var getPassword= RegExp(/^[a-zA-Z0-9]{10,30}$/);-->
+    <!--var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);-->
 
-<!--<div class="container">-->
-    <!--<div class="page-header">-->
-        <!--<h1>To Do List</h1>-->
-    <!--</div>-->
-    <!--<br/>-->
-    <!--<input id="toDoList_idx" type="hidden" th:value="${toDoList?.idx}"/>-->
-    <!--<input id="toDoList_create_date" type="hidden" th:value="${toDoList?.createdDate}"/>-->
-    <!--<table class="table">-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th style="padding:13px 0 0 15px">게시판 선택</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="pull-left">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<select class="form-control input-sm" id="board_type">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option>&#45;&#45;분류&#45;&#45;</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option th:value="notice" th:selected="${board?.boardType?.name() == 'notice'}">공지사항</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option th:value="free" th:selected="${board?.boardType?.name() == 'free'}">자유게시판</option>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</td>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--<tr>-->
-            <!--<th style="padding:13px 0 0 15px;">생성날짜</th>-->
-            <!--<td><input type="text" class="col-md-1 form-control input-sm" readonly="readonly" th:value="${toDoList?.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList?.createdDate}"/></td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<th style="padding:13px 0 0 15px;">상태</th>-->
-            <!--<td><<div class="pull-left">-->
-                <!--<select class="form-control input-sm" id="status_type">-->
-                <!--<option>&#45;&#45;분류&#45;&#45;</option>-->
-                <!--<option>false</option>-->
-                <!--<option>true</option>-->
-                <!--</select>-->
-                <!--</div>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<th style="padding:13px 0 0 15px;">내용</th>-->
-            <!--&lt;!&ndash;<textarea id="toDoList_description" class="col-md-1 form-control input-sm" maxlength="140" rows="7" style="height: 200px;"&ndash;&gt;-->
-                      <!--&lt;!&ndash;th:text="${toDoList?.description}"></textarea>&ndash;&gt;-->
-            <!--<td><input  id = "toDoList_description" type="text" class="form-control pull-left" placeholder="TO DO LIST" style="width: 250px">-->
-                <!--<span class="help-block"></span>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td></td>-->
-            <!--<td></td>-->
-        <!--</tr>-->
-    <!--</table>-->
-    <!--<div class="pull-left">-->
-        <!--<a href="/toDoList/list" class="btn btn-default">목록으로</a>-->
-    <!--</div>-->
-    <!--<div class="pull-right">-->
-        <!--<button th:if="!${toDoList?.idx}" type="button" class="btn btn-primary" id="insert">저장</button>-->
-        <!--<button th:if="${toDoList?.idx}" type="button" class="btn btn-info" id="update">수정</button>-->
-        <!--<button th:if="${toDoList?.idx}" type="button" class="btn btn-danger" id="delete">삭제</button>-->
-    <!--</div>-->
-<!--</div>-->
+    <!--$( '#user_id' ).blur( function(){-->
 
-<!--<div th:replace="layout/footer::footer"></div>-->
-<!--<script th:src="@{/js/jquery.min.js}"></script>-->
-<!--<script th:if="!${toDoList?.idx}">-->
+        <!--if($("#user_id").val() == "" || !getID.test($("#user_id").val())){-->
+            <!--$("#user_id").val("");-->
+            <!--$("#user_id").focus();-->
+            <!--$( '.login-form .displayID' ).html( "아이디는 대,소문자와 숫자 조합으로 5자에서 20자입니다.");-->
+            <!--return false;-->
+        <!--}else   {-->
+            <!--$( '.login-form .displayID' ).html( "사용가능한 아이디입니다.");-->
+
+            <!--$('#idButton').click(function () {-->
+                <!--var jsonData = JSON.stringify({-->
+                    <!--id : $('#user_id').val()-->
+                <!--});-->
+                <!--$.ajax({-->
+                    <!--url: "http://localhost:8080/toDoList/check/register",-->
+                    <!--type: "POST",-->
+                    <!--data: jsonData,-->
+                    <!--contentType: "application/json",-->
+                    <!--dataType: "json",-->
+                    <!--success: function () {-->
+                        <!--alert('사용 가능!');-->
+                    <!--},-->
+                    <!--error: function () {-->
+                        <!--alert('사용 불가능!');-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+        <!--}-->
+    <!--});-->
+
+    <!--$( '#user_password' ).blur( function(){-->
+
+        <!--if($("#user_password").val() == "" || !getPassword.test($("#user_password").val())){-->
+            <!--$("#user_password").val("");-->
+            <!--$("#user_password").focus();-->
+            <!--$( '.login-form .displayPassword' ).html( "비밀번호는 대,소문자와 숫자 조합으로 10자에서 30자입니다.");-->
+            <!--return false;-->
+        <!--}else   {-->
+            <!--$( '.login-form .displayPassword' ).html( "사용가능한 비밀번호입니다.");-->
+        <!--}-->
+    <!--});-->
+
+    <!--$( '#user_email' ).blur( function(){-->
+
+        <!--if($("#user_email").val() == "" || !getMail.test($("#user_email").val())){-->
+            <!--$("#user_email").val("");-->
+            <!--$("#user_email").focus();-->
+            <!--$( '.login-form .displayEmail' ).html( "이메일형식에 맞게 입력해주세요.");-->
+            <!--return false;-->
+        <!--}else   {-->
+            <!--$( '.login-form .displayEmail' ).html( "사용가능한 이메일입니다.");-->
+        <!--}-->
+    <!--});-->
+
+
+    <!--// if($("#user_id").val() == $("#user_password").val()){-->
+    <!--//     $("#user_password").val("");-->
+    <!--//     $("#user_password").focus();-->
+    <!--//     $( '.login-form .display' ).html( "아이디와 비밀번호가 같습니다.");-->
+    <!--//     return false;-->
+    <!--// }-->
+
     <!--$('#insert').click(function () {-->
+
         <!--var jsonData = JSON.stringify({-->
-            <!--// status: $('#toDoList_status').val(),-->
-            <!--description: $('#toDoList_description').val(),-->
+            <!--id: $('#user_id').val(),-->
+            <!--password: $('#user_password').val(),-->
+            <!--email: $('#user_email').val()-->
         <!--});-->
         <!--$.ajax({-->
-            <!--url: "http://localhost:8080/api/toDoLists",-->
+            <!--url: "http://localhost:8080/toDoList/api/register",-->
             <!--type: "POST",-->
             <!--data: jsonData,-->
             <!--contentType: "application/json",-->
             <!--dataType: "json",-->
             <!--success: function () {-->
                 <!--alert('저장 성공!');-->
-                <!--location.href = '/toDoList/list';-->
+                <!--location.href = '/toDoList/login';-->
             <!--},-->
             <!--error: function () {-->
                 <!--alert('저장 실패!');-->
             <!--}-->
         <!--});-->
     <!--});-->
+
 <!--</script>-->
-<!--<script th:if="${toDoList?.idx}">-->
-    <!--$('#update').click(function () {-->
-        <!--var jsonData = JSON.stringify({-->
-            <!--// status: $('#toDoList_status').val(),-->
-            <!--description: $('#toDoList_description').val(),-->
-            <!--createdDate: $('#toDoList_create_date').val()-->
-        <!--});-->
-        <!--$.ajax({-->
-            <!--url: "http://localhost:8080/api/toDoLists/" + $('#toDoList_idx').val(),-->
-            <!--type: "PUT",-->
-            <!--data: jsonData,-->
-            <!--contentType: "application/json",-->
-            <!--dataType: "json",-->
-            <!--success: function () {-->
-                <!--alert('수정 성공!');-->
-                <!--location.href = '/toDoList/list';-->
-            <!--},-->
-            <!--error: function () {-->
-                <!--alert('수정 실패!');-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
-    <!--$('#delete').click(function () {-->
-        <!--$.ajax({-->
-            <!--url: "http://localhost:8080/api/toDoLists/" + $('#toDoList_idx').val(),-->
-            <!--type: "DELETE",-->
-            <!--success: function () {-->
-                <!--alert('삭제 성공!');-->
-                <!--location.href = '/toDoList/list';-->
-            <!--},-->
-            <!--error: function () {-->
-                <!--alert('삭제 실패!');-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->

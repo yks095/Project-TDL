@@ -51,15 +51,9 @@ public class ToDoListService implements UserDetailsService {
     }
 
     public User save(User user) {
+        System.out.println("진입 2");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-//    public boolean check(User user) {
-//
-//        if()   {
-//            return false;
-//        }
-//
-//    }
 }

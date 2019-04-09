@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title><!DOCTYPE html>
@@ -12,10 +12,14 @@
 <body>
 <div class="login-form">
     <form>
-        <input id="user_id" type="text" class="text-field" placeholder="ID"/>
-        <input id="user_password" type="password" class="text-field" placeholder="PASSWORD"/>
-        <input id="user_email" type="email" class="text-field" placeholder="E-MAIL"/>
-        <button id="insert" value="SAVE">저 장</button>
+        <input id="user_id" name="id" type="text" class="text-field" placeholder="ID"/>
+        <button id="idButton" type="button">중복검사</button>
+        <div class="displayID"></div>
+        <input id="user_password" name="password" type="password" class="text-field" placeholder="PASSWORD"/>
+        <div class="displayPassword"></div>
+        <input id="user_email" name="email" type="email" class="text-field" placeholder="E-MAIL"/>
+        <div class="displayEmail"></div>
+        <button id="insert" type="button">저 장</button>
     </form>
     <div class="links">
         <a href="http://localhost:8080/toDoList/login">뒤로가기</a>
@@ -27,20 +31,83 @@
 </head>
 <body>
 <script th:src="@{/js/jquery.min.js}"></script>
-<script>
-    $('#insert').click(function () {
-        if($('#user_id').val().trim().length == 0){
-            alert("Insert ID.");
-            $('#user_id').focus();
+<script type="text/javascript">
+
+    var getID= RegExp(/^[a-zA-Z0-9]{5,20}$/);
+    var getPassword= RegExp(/^[a-zA-Z0-9]{10,30}$/);
+    var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+    var check = false;
+    $( '#user_id' ).blur( function(){
+
+        if($("#user_id").val() == "" || !getID.test($("#user_id").val())){
+            $("#user_id").val("");
+            $("#user_id").focus();
+            $( '.login-form .displayID' ).html( "아이디는 대,소문자와 숫자 조합으로 5자에서 20자입니다.");
             return false;
+        }else   {
+            $( '.login-form .displayID' ).html( "사용 가능한 아이디입니다. 중복검사를 실시하세요");
+
+            $('#idButton').click(function () {
+                var jsonData = JSON.stringify({
+                    id : $('#user_id').val()
+                });
+                $.ajax({
+                    url: "http://localhost:8080/toDoList/check/register",
+                    type: "POST",
+                    data: jsonData,
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function () {
+                        $( '.login-form .displayID' ).html( "사용 가능한 아이디입니다.");
+                        check = true;
+                    },
+                    error: function () {
+                        $( '.login-form .displayID' ).html( "사용 불가능한 아이디입니다.");
+                        $("#user_id").val("");
+                        $("#user_id").focus();
+                        return false;
+                    }
+                });
+            });
         }
-        if($('#user_password').val().trim().length == 0){
-            alert("Insert PASSWORD.");
-            $('#user_password').focus();
+    });
+
+    $( '#user_password' ).blur( function(){
+
+        if($("#user_password").val() == "" || !getPassword.test($("#user_password").val())){
+            $("#user_password").val("");
+            $("#user_password").focus();
+            $( '.login-form .displayPassword' ).html( "비밀번호는 대,소문자와 숫자 조합으로 10자에서 30자입니다.");
             return false;
-        }if($('#user_email').val().trim().length == 0){
-            alert("Insert E-Mail.");
-            $('#user_email').focus();
+        }else   {
+            $( '.login-form .displayPassword' ).html( "사용가능한 비밀번호입니다.");
+        }
+    });
+
+    $( '#user_email' ).blur( function(){
+
+        if($("#user_email").val() == "" || !getMail.test($("#user_email").val())){
+            $("#user_email").val("");
+            $("#user_email").focus();
+            $( '.login-form .displayEmail' ).html( "이메일형식에 맞게 입력해주세요.");
+            return false;
+        }else   {
+            $( '.login-form .displayEmail' ).html( "사용가능한 이메일입니다.");
+        }
+    });
+
+
+    // if($("#user_id").val() == $("#user_password").val()){
+    //     $("#user_password").val("");
+    //     $("#user_password").focus();
+    //     $( '.login-form .display' ).html( "아이디와 비밀번호가 같습니다.");
+    //     return false;
+    // }
+
+    $('#insert').click(function () {
+
+        if(check == false){
+            alert("중복 검사를 실시하세요.");
             return false;
         }
         var jsonData = JSON.stringify({
@@ -63,6 +130,7 @@
             }
         });
     });
+
 </script>
 </body>
 </html>

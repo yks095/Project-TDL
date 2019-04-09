@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,14 @@ import java.util.List;
 @Entity
 @Table
 public class User implements Serializable {
+
+//    public void add2(UserDTO userDTO) throws ClassNotFoundException, SQLException   {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/jpa_ex");
+//
+//        PreparedStatement ps = connection.prepareStatement()
+//    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
