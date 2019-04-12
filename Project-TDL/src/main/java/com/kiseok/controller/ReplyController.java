@@ -3,13 +3,12 @@ package com.kiseok.controller;
 import com.kiseok.domain.Reply;
 import com.kiseok.domain.ToDoList;
 import com.kiseok.repository.ReplyRepository;
+import com.kiseok.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/toDoList")
@@ -18,20 +17,32 @@ public class ReplyController {
     @Autowired
     ReplyRepository replyRepository;
 
-    private ToDoList toDoList;
+    @Autowired
+    ToDoListRepository toDoListRepository;
+//    private ToDoList toDoList;
 
+//    @GetMapping("/list/")
+//    public String list(Model model) {
+//
+//        org.springframework.security.core.userdetails.User user1 = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+//                .getContext().getAuthentication().getPrincipal();
+//
+//        this.user = userRepository.findById(user1.getUsername());
+//
+//        model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
+//        return "/toDoList/list";
+//    }
 
-    @PostMapping("/api/reply")
-    public ResponseEntity<?> postReply(@RequestBody Reply reply)    {
+    @PostMapping("/api/reply/{idx}")
+    public ResponseEntity<?> postReply(@PathVariable("idx")Long idx, @RequestBody Reply reply)    {
 
+        ToDoList toDoList = toDoListRepository.getOne(idx);
         reply.setCreatedDateNow();
-        reply.setToDoList(this.toDoList);
-        this.toDoList.add(reply);
-        System.out.println(toDoList);
-
-        System.out.println(reply);
+        reply.setToDoList(toDoList);
+        toDoList.add(reply);
+        System.out.println("toDoList = " + toDoList);
+        System.out.println("reply = " + reply);
         replyRepository.save(reply);
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
-
 }

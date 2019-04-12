@@ -52,8 +52,8 @@
                 <td><button type="button" class="delete" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
 
             <tr class="insertReply">
-                <td><input id="inputReply" type="text" th-value="${toDoList.idx}" placeholder="REPLY" style="width: 250px"></td>
-                <td><button id="saveReply" type="button" th-value="${toDoList.idx}"> 저장 </button></td>
+                <td><input class="inputReply" type="text" style="width: 250px" data-th-value="${toDoList.idx}"></td>
+                <td><button class="saveReply" type="button" data-th-value="${toDoList.idx}"> 저장 </button></td>
             </tr>
             </tr>
 
@@ -159,13 +159,15 @@
 
     });
 
-    $('#saveReply').click(function () {
+    $('.saveReply').click(function () {
 
+        var v = $(this).val() - 1;
+        var reply_text = $('.insertReply input').eq(v).val();
         var jsonData = JSON.stringify({
-            content: $('#inputReply').val()
+            content: reply_text
         });
         $.ajax({
-            url: "http://localhost:8080/toDoList/api/reply",
+            url: "http://localhost:8080/toDoList/api/reply/" + $(this).val(),
             type: "POST",
             data: jsonData,
             contentType: "application/json",

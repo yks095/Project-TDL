@@ -1,7 +1,9 @@
 package com.kiseok.service;
 
+import com.kiseok.domain.Reply;
 import com.kiseok.domain.ToDoList;
 import com.kiseok.domain.User;
+import com.kiseok.repository.ReplyRepository;
 import com.kiseok.repository.ToDoListRepository;
 import com.kiseok.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class ToDoListService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ReplyRepository replyRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
