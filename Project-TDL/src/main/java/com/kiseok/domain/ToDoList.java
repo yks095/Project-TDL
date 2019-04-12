@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -35,6 +37,9 @@ public class ToDoList implements Serializable {
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "toDoList", fetch = FetchType.EAGER)
+    private List<Reply> replies = new ArrayList<>();
+
     @Builder
     public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate) {
         this.description = description;
@@ -57,4 +62,8 @@ public class ToDoList implements Serializable {
        this.completedDate = this.status? LocalDateTime.now() : null;
     }
 
+    public void add(Reply reply) {
+        reply.setToDoList(this);
+        this.replies.add(reply);
+    }
 }

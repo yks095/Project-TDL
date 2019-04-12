@@ -16,7 +16,7 @@
     <div style="text-align: center">
         <form class="form-inline" onsubmit="return false">
             <input id = "toDoList_description" type="text" placeholder="TO DO LIST" style="width: 250px">
-            <input type="submit" id="insert" value="SAVE">
+            <input type="submit" id="insert" value="저장">
         </form>
     </div>
 
@@ -34,21 +34,29 @@
                 <th class="col-md-5" align="center" style="text-align: center">내용</th>
                 <th class="col-md-2" align="center" style="text-align: center">생성 날짜</th>
                 <th class="col-md-2" align="center" style="text-align: center">완료 날짜</th>
+                <th class="col-md-5" align="center" style="text-align: center">댓글</th>
                 <th class="col-md-5" align="center" style="text-align: center">수정</th>
                 <th class="col-md-5" align="center" style="text-align: center">삭제</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="toDoList : ${tdlList}" style="background-color: white">
+            <tbody id="row" th:each="toDoList : ${tdlList}">
+            <tr  style="background-color: white" >
                 <td th:text="${toDoList.idx}"></td>
                 <td th:if="!${toDoList.status}"><button type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img src="/images/not_checked.png" width="25px" height="25px"></button></td>
                 <td th:if="${toDoList.status}"><button type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img src="/images/checked.png" width="25px" height="25px"></button></td>
                 <td class="description" th:text="${toDoList.description}" data-th-value="${toDoList.idx}" contenteditable="true"></td>
                 <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
                 <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
+                <td><button type="button" class="reply" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/reply.png" width="25px" height="25px" style="background-color: white"></button></td>
                 <td><button type="button" class="update" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button></td>
                 <td><button type="button" class="delete" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
+
+            <tr class="insertReply">
+                <td><input id="inputReply" type="text" th-value="${toDoList.idx}" placeholder="REPLY" style="width: 250px"></td>
+                <td><button id="saveReply" type="button" th-value="${toDoList.idx}"> 저장 </button></td>
             </tr>
+            </tr>
+
             </tbody>
         </table>
     </div>
@@ -62,6 +70,8 @@
 </script>
 
 <script>
+    $('.insertReply').hide();
+
     $('.status').click(function () {
 
         $.ajax({
@@ -82,7 +92,11 @@
 </script>
 
 <script>
+
+
     $('#insert').click(function () {
+
+
         var jsonData = JSON.stringify({
             description: $('#toDoList_description').val()
         });
@@ -136,6 +150,37 @@
             }
         });
     });
+    $('.reply').click(function () {
+            var reply_id = $(this).val();
+
+            var reply_parent_id = $(this).parent().parent().parent().find('.insertReply');
+
+            reply_parent_id.fadeToggle();
+
+    });
+
+    $('#saveReply').click(function () {
+
+        var jsonData = JSON.stringify({
+            content: $('#inputReply').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/toDoList/api/reply",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('댓글 저장 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('댓글 저장 실패!');
+            }
+        });
+    });
+
+
 </script>
 </body>
 </html>

@@ -44,8 +44,6 @@ public class ToDoListController {
         org.springframework.security.core.userdetails.User user1 = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
 
-        System.out.println(user1.getUsername());
-
         this.user = userRepository.findById(user1.getUsername());
 
         model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
@@ -99,7 +97,5 @@ public class ToDoListController {
         toDoListRepository.deleteById(idx);
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
-
-
 
 }
