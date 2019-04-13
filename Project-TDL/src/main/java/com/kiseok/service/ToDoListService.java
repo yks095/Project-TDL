@@ -38,6 +38,11 @@ public class ToDoListService implements UserDetailsService {
         return toDoListRepository.findAllByUserOrderByIdx(user);
     }
 
+//    public List<Reply> findReplyList(ToDoList toDoList) {
+//        System.out.println("여기드왔어욥");
+//        return replyRepository.findAllByToDoListOrderByIdx(toDoList);
+//    }
+
     public User findUserByIdx() {
         return userRepository.getOne(1L);
     }

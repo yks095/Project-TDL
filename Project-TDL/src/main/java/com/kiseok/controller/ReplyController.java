@@ -19,19 +19,6 @@ public class ReplyController {
 
     @Autowired
     ToDoListRepository toDoListRepository;
-//    private ToDoList toDoList;
-
-//    @GetMapping("/list/")
-//    public String list(Model model) {
-//
-//        org.springframework.security.core.userdetails.User user1 = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-//                .getContext().getAuthentication().getPrincipal();
-//
-//        this.user = userRepository.findById(user1.getUsername());
-//
-//        model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
-//        return "/toDoList/list";
-//    }
 
     @PostMapping("/api/reply/{idx}")
     public ResponseEntity<?> postReply(@PathVariable("idx")Long idx, @RequestBody Reply reply)    {

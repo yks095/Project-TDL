@@ -38,9 +38,9 @@ public class RegisterController {
     public ResponseEntity<?> checkUser(@RequestBody  Map<String, String> map) {
 
         String id = map.get("id");
-        User checUser = userRepository.findById(id);
+        User checkUser = userRepository.findById(id);
 
-        if (checUser == null) {
+        if (checkUser == null) {
             return new ResponseEntity<>("{}", HttpStatus.CREATED);
 
         } else {

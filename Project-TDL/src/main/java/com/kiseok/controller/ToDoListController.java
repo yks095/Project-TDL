@@ -1,7 +1,9 @@
 package com.kiseok.controller;
 
+import com.kiseok.domain.Reply;
 import com.kiseok.domain.ToDoList;
 import com.kiseok.domain.User;
+import com.kiseok.repository.ReplyRepository;
 import com.kiseok.repository.ToDoListRepository;
 import com.kiseok.repository.UserRepository;
 import com.kiseok.service.ToDoListService;
@@ -30,7 +32,11 @@ public class ToDoListController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ReplyRepository replyRepository;
+
     private User user;
+    private ToDoList toDoList;
 
     @GetMapping("/logout")
     public String logout()    {
@@ -45,8 +51,12 @@ public class ToDoListController {
                 .getContext().getAuthentication().getPrincipal();
 
         this.user = userRepository.findById(user1.getUsername());
+//        this.toDoList = toDoListRepository.findByIdx(toDoList.getIdx());
 
         model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
+        System.out.println("여기드왔어욥2222");
+
+//        model.addAttribute("reply", toDoListService.findReplyList(this.toDoList));
         return "/toDoList/list";
     }
 

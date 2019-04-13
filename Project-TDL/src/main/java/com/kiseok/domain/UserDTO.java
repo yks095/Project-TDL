@@ -20,6 +20,7 @@ public class UserDTO {
     private String password;
 
     @Email
+    @NotBlank
     private String email;
 
     public User save(UserDTO userDTO)  {
@@ -29,7 +30,6 @@ public class UserDTO {
         user.setId(userDTO.getId());
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
-        System.out.println("진입 3");
 
         return user;
     }
