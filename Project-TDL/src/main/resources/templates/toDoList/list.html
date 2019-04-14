@@ -52,8 +52,15 @@
                 <td><button type="button" class="delete" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
 
             <tr class="insertReply">
-                <td><input class="inputReply" type="text" style="width: 250px" data-th-value="${toDoList.idx}"></td>
+                <td><input class="inputReply" type="text" style="width: 250px"></td>
                 <td><button class="saveReply" type="button" data-th-value="${toDoList.idx}"> 저장 </button></td>
+            </tr>
+            <tr class="showReply" th:each="reply : ${toDoList.replies}" style="display: none">
+                <td class="content" th:text="${reply.content}" contenteditable="true"></td>
+                <td th:text="${reply.createdDate} ? ${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')} : ${reply.createdDate}"></td>
+                <td th:text="${reply.modifiedDate} ? ${#temporals.format(reply.modifiedDate,'yyyy-MM-dd HH:mm')} : ${reply.modifiedDate}"></td>
+                <td><button type="button" class="updateReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button></td>
+                <td><button type="button" class="deleteReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
             </tr>
             </tr>
 
@@ -96,7 +103,6 @@
 
     $('#insert').click(function () {
 
-
         var jsonData = JSON.stringify({
             description: $('#toDoList_description').val()
         });
@@ -136,6 +142,26 @@
         });
     });
 
+    $('.updateReply').click(function () {
+
+        var dc = $(this).parent().parent().find('.content').text()
+
+        $.ajax({
+            url: "http://localhost:8080/toDoList/api/updateReply/" + $(this).val(),
+            type: "PUT",
+            data: dc,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('댓글 수정 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('댓글 수정 실패!');
+            }
+        });
+    });
+
     $('.delete').click(function () {
         $.ajax({
             url: "http://localhost:8080/toDoList/api/delete/" + $(this).val(),
@@ -150,12 +176,29 @@
             }
         });
     });
+
+    $('.deleteReply').click(function () {
+        $.ajax({
+            url: "http://localhost:8080/toDoList/api/deleteReply/" + $(this).val(),
+            type: "DELETE",
+            contentType: "application/json",
+            success: function () {
+                alert('댓글 삭제 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('댓글 삭제 실패!');
+            }
+        });
+    });
+
     $('.reply').click(function () {
-            var reply_id = $(this).val();
 
-            var reply_parent_id = $(this).parent().parent().parent().find('.insertReply');
+        // var reply_id = $(this).val();
+        var reply_parent_id = $(this).parent().parent().parent().find('.insertReply');
+        reply_parent_id.fadeToggle();
+        $(".showReply").fadeToggle();
 
-            reply_parent_id.fadeToggle();
 
     });
 

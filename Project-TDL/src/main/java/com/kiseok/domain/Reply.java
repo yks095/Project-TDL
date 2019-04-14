@@ -1,9 +1,6 @@
 package com.kiseok.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,6 +40,10 @@ public class Reply implements Serializable {
         this.createdDate = LocalDateTime.now();
     }
 
+    public void update(String content)    {
+        this.modifiedDate = LocalDateTime.now();
+        this.content = content;
+    }
 
 
 }

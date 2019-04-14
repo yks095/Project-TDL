@@ -8,13 +8,6 @@
 </head>
 <body>
 <div class="login-form">
-    <!--<form onsubmit="return false">-->
-    <!--<form th:action="@{/toDoList/login}" method="post">-->
-        <!--<input type="text" id="user_id" name="name" class="text-field" placeholder="아이디"><br>-->
-        <!--<input type="password" id="user_password" name="password" class="text-field" placeholder="비밀번호"><br>-->
-        <!--&lt;!&ndash;<button id="login" value="SAVE">로그인</button>&ndash;&gt;-->
-        <!--<div><input type="submit" value="로그인"/></div>-->
-    <!--</form>-->
     <form th:action="@{/toDoList/login}" method="post">
         <div><label> <input type="text" name="username"/> </label></div>
         <div><label> <input type="password" name="password"/> </label></div>
@@ -23,47 +16,6 @@
     <div class="links">
         <a href="http://localhost:8080/toDoList/register">ID가 없나요?</a>
     </div>
-
 </div>
-<!--<script th:src="@{/js/jquery.min.js}"></script>-->
-<!--<script>-->
-    <!--$('#login').click(function () {-->
-        <!--var jsonData = JSON.stringify({-->
-            <!--id: $('#user_id').val(),-->
-            <!--password: $('#user_password').val(),-->
-        <!--});-->
-        <!--$.ajax({-->
-            <!--url: "http://localhost:8080/toDoList/api/login",-->
-            <!--type: "POST",-->
-            <!--data: jsonData,-->
-            <!--contentType: "application/json",-->
-            <!--dataType: "json",-->
-            <!--success: function () {-->
-                <!--$.ajax({-->
-                    <!--url: "http://localhost:8080/toDoList/check",-->
-                    <!--type: "POST",-->
-                    <!--data: $('#user_id').val(),-->
-                    <!--contentType: "application/json",-->
-                    <!--dataType: "json",-->
-                    <!--success: function () {-->
-                        <!--// alert('로그인 성공!');-->
-                        <!--location.href = '/toDoList/list';-->
-                    <!--},-->
-                    <!--error: function () {-->
-                        <!--alert('로그인 실패!');-->
-                    <!--}-->
-                <!--});-->
-
-
-
-                <!--alert('로그인 성공!');-->
-                <!--location.href = '/toDoList/list';-->
-            <!--},-->
-            <!--error: function () {-->
-                <!--alert('로그인 실패!');-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
 </body>
 </html>

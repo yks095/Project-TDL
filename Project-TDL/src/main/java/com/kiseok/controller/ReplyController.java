@@ -27,9 +27,22 @@ public class ReplyController {
         reply.setCreatedDateNow();
         reply.setToDoList(toDoList);
         toDoList.add(reply);
-        System.out.println("toDoList = " + toDoList);
-        System.out.println("reply = " + reply);
         replyRepository.save(reply);
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/api/updateReply/{idx}")
+    public ResponseEntity<?> putReply(@PathVariable("idx")Long idx, @RequestBody String content) {
+        Reply persistReply= replyRepository.getOne(idx);
+        persistReply.update(content);
+        replyRepository.save(persistReply);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/deleteReply/{idx}")
+    public ResponseEntity<?> deleteReply(@PathVariable("idx")Long idx)  {
+        replyRepository.deleteById(idx);
+        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 }
