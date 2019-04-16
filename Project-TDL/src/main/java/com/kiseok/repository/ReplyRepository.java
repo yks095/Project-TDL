@@ -9,5 +9,6 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     List<Reply> findAllByToDoListOrderByIdx(ToDoList toDoList);
+//    List<Reply> deleteReplyByt
 
 }

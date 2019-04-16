@@ -8,66 +8,49 @@
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
+    <div class="page-header" style="text-align: center">
         <h1>To Do List</h1>
+        <button type="button" class="logout" style="outline: none; border: 0px; background-color: white; margin-left: 600px;"><a href="/toDoList/logout" style="font-size: large">logout</a></button>
     </div>
     <br/><br/><br/>
 
-    <div style="text-align: center">
-        <form class="form-inline" onsubmit="return false">
-            <input id = "toDoList_description" type="text" placeholder="TO DO LIST" style="width: 250px">
-            <input type="submit" id="insert" value="저장">
+    <div style="text-align: center;">
+        <form class="form-inline" onsubmit="return false" style="text-align: center">
+            <input id = "toDoList_description" type="text" placeholder="TO DO LIST" style="width: 250px; text-align: center">
+            <input type="submit" id="insert" value="저장" style="text-align: center">
         </form>
     </div>
 
-    <div id="mainHide" align="center" style="text-align: center;">
-        <table class="table table-striped" align="center" style="text-align: center;">
-            <thead>
-            <tr>
-                <th style="padding:13px 0 0 15px;">ToDoList</th>
-                <th><button type="button" class="logout" style="outline: none; border: 0px; background-color: white"><a href="/toDoList/logout">logout</a></button></th>
+    <br/><br/><br/>
 
-            </tr>
-            <tr>
-                <th class="col-md-1" align="center" style="text-align: center">#</th>
-                <th class="col-md-2" align="center" style="text-align: center">완료 여부</th>
-                <th class="col-md-5" align="center" style="text-align: center">내용</th>
-                <th class="col-md-2" align="center" style="text-align: center">생성 날짜</th>
-                <th class="col-md-2" align="center" style="text-align: center">완료 날짜</th>
-                <th class="col-md-5" align="center" style="text-align: center">댓글</th>
-                <th class="col-md-5" align="center" style="text-align: center">수정</th>
-                <th class="col-md-5" align="center" style="text-align: center">삭제</th>
-            </tr>
-            </thead>
-            <tbody id="row" th:each="toDoList : ${tdlList}">
-            <tr  style="background-color: white" >
-                <td th:text="${toDoList.idx}"></td>
-                <td th:if="!${toDoList.status}"><button type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img src="/images/not_checked.png" width="25px" height="25px"></button></td>
-                <td th:if="${toDoList.status}"><button type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img src="/images/checked.png" width="25px" height="25px"></button></td>
-                <td class="description" th:text="${toDoList.description}" data-th-value="${toDoList.idx}" contenteditable="true"></td>
-                <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
-                <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
-                <td><button type="button" class="reply" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/reply.png" width="25px" height="25px" style="background-color: white"></button></td>
-                <td><button type="button" class="update" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button></td>
-                <td><button type="button" class="delete" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
+    <div>
+        <div th:each="toDoList : ${tdlList}" style="background-color: white; border: solid; border-color: #269abc; border-radius: 8px; padding: 40px 40px 30px 10px; margin-bottom: 30px;">
+            <div>
+                <button th:if="!${toDoList.status}" type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white; float: left"><img src="/images/not_checked.png" width="25px" height="25px"></button>
+                <button th:if="${toDoList.status}" type="button" class="status" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white; float: left"><img src="/images/checked.png" width="25px" height="25px"></button>
+                <h1 style="margin-left: 50px" class="description" th:text="${toDoList.description}" data-th-value="${toDoList.idx}" contenteditable="true"></h1>
+            </div>
+            <h3 style="height: 33%;" th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></h3>
+            <h3 style="height: 33%;" th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></h3>
+            <button type="button" class="update" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white; float: right"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button>
+            <button type="button" class="delete" data-th-value="${toDoList.idx}" style="outline: none; border: 0px; background-color: white; float: right"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button>
+            <button type="button" class="reply" style="outline: none; border: 0px; background-color: white; float: right"><img class="btn-img" src="/images/reply.png" width="25px" height="25px" style="background-color: white"></button>
 
-            <tr class="insertReply">
-                <td><input class="inputReply" type="text" style="width: 250px"></td>
-                <td><button class="saveReply" type="button" data-th-value="${toDoList.idx}"> 저장 </button></td>
-            </tr>
-            <tr class="showReply" th:each="reply : ${toDoList.replies}" style="display: none">
-                <td class="content" th:text="${reply.content}" contenteditable="true"></td>
-                <td th:text="${reply.createdDate} ? ${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')} : ${reply.createdDate}"></td>
-                <td th:text="${reply.modifiedDate} ? ${#temporals.format(reply.modifiedDate,'yyyy-MM-dd HH:mm')} : ${reply.modifiedDate}"></td>
-                <td><button type="button" class="updateReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button></td>
-                <td><button type="button" class="deleteReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button></td>
-            </tr>
-            </tr>
-
-            </tbody>
-        </table>
+            <div class="insertReply" style="display:none;">
+                <input class="inputReply" type="text" style="width: 250px">
+                <button class="saveReply" type="button" data-th-value="${toDoList.idx}"> 저장 </button>
+            </div>
+            <div class="showReply" th:each="reply : ${toDoList.replies}" style="display: none;">
+                <div class="content" th:text="${reply.content}" contenteditable="true"></div>
+                <div th:text="${reply.createdDate} ? ${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')} : ${reply.createdDate}"></div>
+                <div th:text="${reply.modifiedDate} ? ${#temporals.format(reply.modifiedDate,'yyyy-MM-dd HH:mm')} : ${reply.modifiedDate}"></div>
+                <button type="button" class="updateReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button>
+                <button type="button" class="deleteReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button>
+            </div>
+        </div>
+        <br/><br/><br/>
     </div>
-    <br/>
+
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 
@@ -77,7 +60,6 @@
 </script>
 
 <script>
-    $('.insertReply').hide();
 
     $('.status').click(function () {
 
@@ -195,11 +177,11 @@
     $('.reply').click(function () {
 
         // var reply_id = $(this).val();
-        var reply_parent_id = $(this).parent().parent().parent().find('.insertReply');
+        var reply_parent_id = $(this).parent().find('.insertReply');
         reply_parent_id.fadeToggle();
-        $(".showReply").fadeToggle();
-
-
+        // $(".showReply").fadeToggle();
+        var show = $(this).parent().find('.showReply');
+        show.fadeToggle();
     });
 
     $('.saveReply').click(function () {

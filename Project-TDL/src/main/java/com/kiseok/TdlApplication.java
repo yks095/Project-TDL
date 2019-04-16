@@ -11,8 +11,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.util.stream.IntStream;
-
 @SpringBootApplication
 public class TdlApplication {
 

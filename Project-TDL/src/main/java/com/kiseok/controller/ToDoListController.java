@@ -102,7 +102,7 @@ public class ToDoListController {
     @DeleteMapping("/api/delete/{idx}")
     public ResponseEntity<?> deleteToDoList(@PathVariable("idx")Long idx)  {
         toDoListRepository.deleteById(idx);
-
+//        replyRepository.delete;
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
