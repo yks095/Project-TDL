@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="findID-form" th:align="center">
+    <form class="form-inline" onsubmit="return false" style="text-align: center">
+        <input class="sendCode" name="email" type="text" placeholder="E-Mail"/>
+        <input class="sendCodeButton" type="submit" value="전송"/>
+        <input class="insertCode" name="code" type="text" placeholder="Code"/>
+        <input class="insertCodeButton" type="submit" value="확인"/>
+    </form>
+    <div class="links">
+        <a href="http://localhost:8080/toDoList/login">뒤로가기</a>
+    </div>
+
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/find.js}"></script>
+</body>
+</html>

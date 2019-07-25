@@ -37,177 +37,24 @@
             <button type="button" class="reply" style="outline: none; border: 0px; background-color: white; float: right"><img class="btn-img" src="/images/reply.png" width="25px" height="25px" style="background-color: white"></button>
 
             <div class="insertReply" style="display:none;">
-                <input class="inputReply" type="text" style="width: 250px">
+                <input id="inputReply" class="inputReply" type="text" style="width: 250px">
                 <button class="saveReply" type="button" data-th-value="${toDoList.idx}"> 저장 </button>
             </div>
-            <div class="showReply" th:each="reply : ${toDoList.replies}" style="display: none;">
-                <div class="content" th:text="${reply.content}" contenteditable="true"></div>
-                <div th:text="${reply.createdDate} ? ${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')} : ${reply.createdDate}"></div>
-                <div th:text="${reply.modifiedDate} ? ${#temporals.format(reply.modifiedDate,'yyyy-MM-dd HH:mm')} : ${reply.modifiedDate}"></div>
-                <button type="button" class="updateReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/update.png" width="25px" height="25px" style="background-color: white"></button>
-                <button type="button" class="deleteReply" data-th-value="${reply.idx}" style="outline: none; border: 0px; background-color: white"><img class="btn-img" src="/images/delete.png" width="25px" height="25px" style="background-color: white"></button>
+            <div id="showReply" class="showReply" style="display: none;">
+                <ul id="ulReply" style="list-style-type:none;">
+                    <li class="liReply" th:each="reply : ${toDoList.replies}">
+                        <h3 class="content" th:text="${reply.content}" data-th-value="${reply.idx}" contenteditable="true"></h3>
+                        <h5 class="createdDate" th:text="${reply.createdDate} ? ${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')} : ${reply.createdDate}"></h5>
+                        <button type="button" id="updateReply" class="updateReply" data-th-value="${reply.idx}" th:text="수정" style="outline: none; border: 0px; background-color: white"></button>
+                        <button type="button" id="deleteReply" class="deleteReply" data-th-value="${reply.idx}" th:text="삭제" style="outline: none; border: 0px; background-color: white"></button>
+                    </li>
+                </ul>
             </div>
         </div>
         <br/><br/><br/>
     </div>
-
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
-
-
-<script>
-
-</script>
-
-<script>
-
-    $('.status').click(function () {
-
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/status/" + $(this).val(),
-            type: "PUT",
-            contentType: "application/json",
-            dataType: "json",
-            success: function() {
-                alert('완료 갱신 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('완료 갱신 실패!');
-            }
-        });
-    });
-
-</script>
-
-<script>
-
-
-    $('#insert').click(function () {
-
-        var jsonData = JSON.stringify({
-            description: $('#toDoList_description').val()
-        });
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/list",
-            type: "POST",
-            data: jsonData,
-            contentType: "application/json",
-            dataType: "json",
-            success: function () {
-                alert('저장 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('저장 실패!');
-            }
-        });
-    });
-
-    $('.update').click(function () {
-
-        var dc = $(this).parent().parent().find('.description').text()
-
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/update/" + $(this).val(),
-            type: "PUT",
-            data: dc,
-            contentType: "application/json",
-            dataType: "json",
-            success: function () {
-                alert('수정 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('수정 실패!');
-            }
-        });
-    });
-
-    $('.updateReply').click(function () {
-
-        var dc = $(this).parent().parent().find('.content').text()
-
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/updateReply/" + $(this).val(),
-            type: "PUT",
-            data: dc,
-            contentType: "application/json",
-            dataType: "json",
-            success: function () {
-                alert('댓글 수정 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('댓글 수정 실패!');
-            }
-        });
-    });
-
-    $('.delete').click(function () {
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/delete/" + $(this).val(),
-            type: "DELETE",
-            contentType: "application/json",
-            success: function () {
-                alert('삭제 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('삭제 실패!');
-            }
-        });
-    });
-
-    $('.deleteReply').click(function () {
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/deleteReply/" + $(this).val(),
-            type: "DELETE",
-            contentType: "application/json",
-            success: function () {
-                alert('댓글 삭제 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('댓글 삭제 실패!');
-            }
-        });
-    });
-
-    $('.reply').click(function () {
-
-        // var reply_id = $(this).val();
-        var reply_parent_id = $(this).parent().find('.insertReply');
-        reply_parent_id.fadeToggle();
-        // $(".showReply").fadeToggle();
-        var show = $(this).parent().find('.showReply');
-        show.fadeToggle();
-    });
-
-    $('.saveReply').click(function () {
-
-        var v = $(this).val() - 1;
-        var reply_text = $('.insertReply input').eq(v).val();
-        var jsonData = JSON.stringify({
-            content: reply_text
-        });
-        $.ajax({
-            url: "http://localhost:8080/toDoList/api/reply/" + $(this).val(),
-            type: "POST",
-            data: jsonData,
-            contentType: "application/json",
-            dataType: "json",
-            success: function () {
-                alert('댓글 저장 성공!');
-                location.href = '/toDoList/list';
-            },
-            error: function () {
-                alert('댓글 저장 실패!');
-            }
-        });
-    });
-
-
-</script>
+<script th:src="@{/js/list.js}"></script>
 </body>
 </html>

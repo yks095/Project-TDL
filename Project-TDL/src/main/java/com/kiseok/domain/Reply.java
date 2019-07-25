@@ -18,13 +18,13 @@ public class Reply implements Serializable {
     private Long idx;
 
     @Column
-    String content;
+    private String content;
 
     @Column
-    LocalDateTime createdDate;
+    private LocalDateTime createdDate;
 
     @Column
-    LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate;
 
     @ManyToOne
     private ToDoList toDoList;

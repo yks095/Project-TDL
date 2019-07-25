@@ -1,4 +1,18 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    username: rltjr219@gmail.com
+    password: nikqambfjjeukago
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+    support:
+      email: rltjr219@gmail.com
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/jpa_ex?serverTimezone=UTC
     username: jpa_user

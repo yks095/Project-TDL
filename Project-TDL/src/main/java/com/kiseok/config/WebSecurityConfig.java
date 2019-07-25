@@ -7,9 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +17,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
             .antMatchers("/", "/css/**", "/images/**", "/js/**",  "/toDoList/register",
+                                 "/toDoList/findID", "/toDoList/api/findID", "/toDoList/findPW", "/toDoList/api/findPW",
+                                 "/toDoList/api/checkCode", "/toDoList/api/changePW",
                                  "/toDoList/api/register", "/toDoList/api/list", "/toDoList/check/register").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -50,11 +50,8 @@ public class ToDoListController {
         org.springframework.security.core.userdetails.User user1 = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         this.user = userRepository.findById(user1.getUsername());
-//        this.toDoList = toDoListRepository.findByIdx(toDoList.getIdx());
 
         model.addAttribute("tdlList", toDoListService.findTdlList(this.user));
-//        model.addAttribute("reply", toDoListService.findReplyList(this.toDoList));
-        System.out.println("여기드왔어욥2222");
         return "/toDoList/list";
     }
 
@@ -102,7 +99,6 @@ public class ToDoListController {
     @DeleteMapping("/api/delete/{idx}")
     public ResponseEntity<?> deleteToDoList(@PathVariable("idx")Long idx)  {
         toDoListRepository.deleteById(idx);
-//        replyRepository.delete;
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 

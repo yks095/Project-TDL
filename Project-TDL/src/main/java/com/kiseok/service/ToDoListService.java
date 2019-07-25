@@ -38,15 +38,6 @@ public class ToDoListService implements UserDetailsService {
         return toDoListRepository.findAllByUserOrderByIdx(user);
     }
 
-    public List<Reply> findReplyList(ToDoList toDoList) {
-        System.out.println("여기드왔어욥");
-        return replyRepository.findAllByToDoListOrderByIdx(toDoList);
-    }
-
-    public User findUserByIdx() {
-        return userRepository.getOne(1L);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -64,5 +55,4 @@ public class ToDoListService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-
 }
